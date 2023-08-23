@@ -26,6 +26,10 @@ const userSchema = new Schema({
     },
     wishlist: {
         type: [String]
+    },
+    isBlocked: {
+        type: Boolean,
+        default: false
     }
 
 })
