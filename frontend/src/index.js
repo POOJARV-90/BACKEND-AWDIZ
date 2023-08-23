@@ -5,10 +5,12 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom'
  import {Toaster} from 'react-hot-toast'
+import { Authprovider } from './Compo/Context/Authcontext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <Authprovider>
    <BrowserRouter>
    <Toaster
   position="top-center"
@@ -37,6 +39,7 @@ root.render(
 />
     <App />
     </BrowserRouter>
+    </Authprovider>
   </React.StrictMode>
 );
 

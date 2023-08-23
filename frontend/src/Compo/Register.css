@@ -1,0 +1,60 @@
+#body{
+    /* border: 1px solid red; */
+    width: 100%;
+    margin-top: 5%;
+   
+ }
+ 
+ form{
+     border: 1px solid rgb(166, 166, 223);
+     border-radius: 20px;
+     width: 30%;   
+     margin: auto;
+     /* height: 400px; */
+     padding: 4% 0%;
+     
+ }
+ form>label{
+     font-size: large;
+    
+     color: rgb(194, 145, 194);
+ }
+ form>H4{
+     margin-top: -20px;
+     font-size: 30px;
+     color: rgb(145, 145, 212);
+ }
+ 
+ form>input{
+     padding: 2%;
+     width: 80%;
+     margin-top: 2%;
+     margin-bottom: 2%;
+     border: NONE;
+     border-bottom: 1px solid rgb(166, 166, 223);
+ }
+ 
+ #button{
+     width: 40%;
+     border: 1px solid rgb(176, 176, 219);
+     margin-top: 5%;
+     cursor: pointer;
+     font-size: large;
+     color:rgb(115, 115, 179) ;
+ }
+ #select{
+     color:rgb(115, 115, 179) ;
+     font-size: large;
+     margin-left: 5%;
+     border: none;
+     margin-bottom: 3%;
+ 
+ }
+
+ #form>p{
+    color: blue;
+ }
+ #tag{
+     color:rgb(115, 115, 179) ;
+      margin-top: 5%;
+ }

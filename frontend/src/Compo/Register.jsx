@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { toast } from 'react-hot-toast'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import '../Compo/Register.css'
 
 const Register = () => {
   const router = useNavigate();
@@ -38,7 +39,7 @@ const Register = () => {
     }
 }
   return (
-    <div>
+    <div id="body">
 
       <form onSubmit={handleSubmit} >
         <label >NAME</label> <br />
@@ -47,8 +48,8 @@ const Register = () => {
         <label >EMAIL</label> <br />
         <input  onChange={handleChange} value={userdata.email}  type="email"  name='email'/> <br />
 
-        <label>ROLE</label> <br />
-        <select onChange={handleRole}>
+        <label>ROLE</label>   
+        <select id="select" onChange={handleRole}>
           <option value="Buyer">Buyer</option>
           <option value="Seller">Seller</option>
         </select> <br />
@@ -59,9 +60,9 @@ const Register = () => {
         <label >CONFIRM PASSWORD</label> <br />
         <input  onChange={handleChange} value={userdata.confirmpassword} type="password" name='confirmpassword'/> <br />
 
-        <input type="submit" value="REGISTER" /> <br />
+        <input id="button" type="submit" value="REGISTER" /> <br />
 
-        <button>Already have account ? <b onClick={()=>router("/Login")}> Click here</b> </button>
+        <p>Already have account ? <b onClick={()=>router("/Login")}> Click here</b> </p>
 
 
       </form>
