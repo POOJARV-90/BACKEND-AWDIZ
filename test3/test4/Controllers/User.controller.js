@@ -6,7 +6,7 @@ export const Register = async (req, res) => {
   try {
 
     const {userdata} = req.body
-    const { name, email, password, role } =userdata;
+    const { name, email, password, role } = userdata;
     if (!name || !email || !password || !role)
       return res.json({
         success:false ,
