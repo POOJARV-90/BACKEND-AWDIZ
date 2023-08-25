@@ -1,64 +1,49 @@
+import axios from "axios";
 import { createContext, useEffect, useReducer } from "react";
 
 export const Authcontext = createContext();
-const incialstate = { userdata: null, token: null };
+
+const initialState = { user: null };
 
 const reducer = (state, action) => {
-  switch (action.type) {
-    case "login":
-      return {
-        ...state,
-        usedata: action.payload,
-        token: action.token,
-      };
+    switch (action.type) {
+        case 'LOGIN':
+            return { ...state, user: action.payload }
+        case 'LOGOUT':
+            return { ...state, user: null }
+        default:
+            return state
+    }
+}
 
-    case "logout":
-      return { usedata: null, token: null };
+// Its a higher order function hof 
+const HandleAuthContext = ({ children }) => {
+    const [state, dispatch] = useReducer(reducer, initialState)
 
-      break;
+    useEffect(() => {
+        async function getCurrentUserData() {
+            var token = JSON.parse(localStorage.getItem("token"));
+            const response = await axios.post("http://localhost:8000/get-current-user", { token });
+            if (response.data.success) {
+                dispatch({
+                    type: "LOGIN",
+                    payload: response.data.user
+                })
+            } else {
+                dispatch({
+                    type: "LOGOUT"
+                });
+            }
+        }
+        getCurrentUserData();
+    }, [])
 
-    default:
-      return state;
-  }
-};
+    return (
+        <Authcontext.Provider value={{ state, dispatch }}>
+            {children}
+        </Authcontext.Provider>
+    )
 
-export const Authprovider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, incialstate);
+}
 
-  const login = (token, userdata) => {
-
-    localStorage.setItem("Data", JSON.stringify(userdata));
-    localStorage.setItem("Token", JSON.stringify(token));
-    dispatch({
-      type: "login",
-      payload: userdata,
-      token: token,
-    });
-  };
-
-  const logout = () => {
-    localStorage.removeItem("Data");
-    localStorage.removeItem("Token");
-    dispatch({
-      type: "logout",
-    });
-  };
-
-  useEffect(()=> {
-
-      const DataUser = JSON.parse(localStorage.getItem("Data"))
-      const Token = JSON.parse(localStorage.getItem("Token"));
-      dispatch({
-          type:"login",
-          payload: DataUser,
-          token : Token,
-      })
-
-  },[])
-
-  return (
-    <Authcontext.Provider value={{ state, login, logout }}>
-      {children}
-    </Authcontext.Provider>
-  );
-};
+export default HandleAuthContext;
