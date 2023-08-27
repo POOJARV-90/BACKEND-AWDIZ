@@ -7,7 +7,7 @@ import '../Compo/Register.css'
 const Register = () => {
   const router = useNavigate();
 
-  const [ userdata , setUserdata] = useState({name:"",email:"",password:"",confirmpassword:"" , role:"Buyer"})
+  const [ userdata , setUserdata] = useState({name:"",email:"",password:"",confirmpassword:"", role:"Buyer"})
   const handleChange = (event) => {
     setUserdata({...userdata,[event.target.name]:event.target.value})
   }
@@ -16,7 +16,7 @@ const Register = () => {
     setUserdata({...userdata,"role":event.target.value})
   }
 
-  // console.log(userdata,"all data here");
+  console.log(userdata,"all data here");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -24,7 +24,7 @@ const Register = () => {
         if (userdata.password === userdata.confirmpassword) {
             const response = await axios.post("http://localhost:8000/register", { userdata });
             if (response.data.success) {
-                setUserdata({ name: "", email: "", password: "", confirmpassword: "", role: "Buyer" })
+                setUserdata({ name: "", email: "", password: "", confirmpassword: "", role: "" })
                 router('/Login')
                 toast.success(response.data.message)
             } else {
@@ -50,6 +50,7 @@ const Register = () => {
 
         <label>ROLE</label>   
         <select id="select" onChange={handleRole}>
+          <option>role</option>
           <option value="Buyer">Buyer</option>
           <option value="Seller">Seller</option>
         </select> <br />

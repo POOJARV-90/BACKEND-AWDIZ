@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
@@ -8,27 +8,22 @@ const Login = () => {
   const router = useNavigate();
   const {state , dispatch} = useContext(Authcontext)
 
-  const [ userdata , setUserdata] = useState({name:"",email:"",password:"",confirmpassword:"" , role:"Buyer"})
+  const [ userdata , setUserdata] = useState({email:"",password:""})
   const handleChange = (event) => {
     setUserdata({...userdata,[event.target.name]:event.target.value})
   }
 
-  
-
-  // console.log(userdata,"all data here");
-
+  useEffect(() => {
+    if (state?.user?.name) {
+        router('/')
+    }
+}, [state])
   const handleSubmit = async (event) => {
     event.preventDefault();
     if ( userdata.email && userdata.password) {
       
             const response = await axios.post("http://localhost:8000/login", { userdata });
             if (response.data.success) {
-            //   console.log(response.data,"data");
-            //    const token  = response.data.token;
-            //    const user = response.data.user;
-            // // console.log(user,"userdata");
-            //   await login(token , user)
-
             dispatch({
               type: 'LOGIN',
               payload: response.data.user

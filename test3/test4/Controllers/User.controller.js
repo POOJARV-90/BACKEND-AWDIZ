@@ -1,4 +1,4 @@
-import UserModal from "../Modals/User.modal.js";
+import UserModal from "../../test4/Modals/User.modal.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -48,9 +48,7 @@ export const Login = async (req, res) => {
     if (!user) return res.json({ success: false, message: "User not found.." });
 
     if (user.isBlocked) {
-      return res
-        .status(404)
-        .json({ success: false, message: "You are Blocked, Contact us." });
+      return res.json({ success: false, message: "You are Blocked, Contact us." });
     }
 
     const isPasswordRight = await bcrypt.compare(password, user.password);
@@ -60,6 +58,7 @@ export const Login = async (req, res) => {
         name: user.name,
         email: user.email,
         _id: user._id,
+        role:user.role
       };
       const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
       // console.log(token, "token her")
@@ -80,16 +79,12 @@ export const getCurrentUser = async (req, res) => {
   try {
     const { token } = req.body;
     if (!token)
-      return res
-        .status(404)
-        .json({ success: false, message: "Token is required!" });
+      return res.json({ success: false, message: "Token is required!" });
 
     const decoededData = jwt.verify(token, process.env.JWT_SECRET);
 
     if (!decoededData) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Not valid json token.." });
+      return res.json({ success: false, message: "Not valid json token.." });
     }
     // return res.send(decoededData)
     const userId = decoededData?.userId;
@@ -97,19 +92,14 @@ export const getCurrentUser = async (req, res) => {
     const user = await UserModal.findById(userId);
 
     if (!user) {
-      return res
-        .status(404)
-        .json({ success: false, message: "User not found.." });
+      return res.json({ success: false, message: "User not found.." });
     }
 
-    //     } catch (error) {
-    //         return res.json({ status: "error", message: error })
-    //     }
-    // }
     const userObeject = {
       name: user?.name,
       email: user?.email,
       _id: user?._id,
+      role:user?.role
     };
 
     return res.status(200).json({ success: true, user: userObeject });

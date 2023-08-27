@@ -2,16 +2,19 @@ import express from 'express'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose';
 import cors from 'cors'
+import morgan from 'morgan';
 import { Login, Register, getCurrentUser } from './Controllers/User.controller.js';
 import { addComments, addProduct, addRating, allProducts, deleteyourProduct, getYourProducts, updateYourProduct } from './Controllers/Product.controller.js';
 import { checkseller, isAdmin, isValidUser } from './middleware/All.middleware.js';
 import { addCart, addWishlist, allcartProduct, getWishlistProducts, removecartproduct } from './Controllers/Buyers.controller.js';
 import { blockProduct, blockUser, getAllBuyers, getAllProducts, getAllSellers, getBlockedProducts, getUnVerifiedProducts, getverifiedProducts, unBlockUser, unblockProduct, verifyProduct } from './Controllers/Admin.controllers.js';
 
+
 const app = express();
 app.use(express.json())
 dotenv.config();
 app.use(cors())
+app.use(morgan("dev"))
 
 
 app.get("/",(req, res)=>{
@@ -27,7 +30,7 @@ app.get("/all-products", allProducts)
 //SELLER
 
 app.post('/add-product' , checkseller, addProduct )
-app.get('/get-your-product' , checkseller, getYourProducts)
+app.post('/get-your-product' , checkseller, getYourProducts)
 app.patch('/update-your-product', checkseller, updateYourProduct)
 app.delete('/delete-your-product', checkseller, deleteyourProduct)
 

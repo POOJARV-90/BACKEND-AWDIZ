@@ -13,12 +13,10 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-
     role :{
         type: String,
         enum : ["Buyer","Seller","Admin"],
-        default:"Buyer"
-        
+        default:"Buyer"    
     }
     , 
     cart :{
