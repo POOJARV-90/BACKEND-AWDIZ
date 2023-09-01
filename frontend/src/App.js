@@ -7,6 +7,7 @@ import Login from './Compo/Login';
 import Navbar from './Compo/Common/Navbar';
 import AddProduct from './Compo/Seller/AddProduct';
 import YourProducts from './Compo/Seller/YourProducts';
+import Profile from './Compo/Profile';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <Route exact path='/Login' element={<Login/>}/>
       <Route exact path='/add-product' element={<AddProduct/>}/>
       <Route exact path='/seller-your-products' element={<YourProducts/>}/>
+      <Route exact path='/profile' element={<Profile/>}/>
       
       </Routes>
       

@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 import mongoose from 'mongoose';
 import cors from 'cors'
 import morgan from 'morgan';
-import { Login, Register, getCurrentUser } from './Controllers/User.controller.js';
+import { Login, Register, getCurrentUser, getNumber, sendOtp, verifyOtp } from './Controllers/User.controller.js';
 import { addComments, addProduct, addRating, allProducts, deleteyourProduct, getYourProducts, updateYourProduct } from './Controllers/Product.controller.js';
 import { checkseller, isAdmin, isValidUser } from './middleware/All.middleware.js';
 import { addCart, addWishlist, allcartProduct, getWishlistProducts, removecartproduct } from './Controllers/Buyers.controller.js';
@@ -25,6 +25,10 @@ app.post("/register",Register)
 app.post("/login",Login)
 app.post('/get-current-user', getCurrentUser)
 app.get("/all-products", allProducts)
+app.post("/get-number", getNumber)
+
+app.post("/send-otp", sendOtp)
+app.post("/verify-otp", verifyOtp) //verification
 
 
 //SELLER

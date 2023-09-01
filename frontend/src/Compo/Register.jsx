@@ -7,7 +7,7 @@ import '../Compo/Register.css'
 const Register = () => {
   const router = useNavigate();
 
-  const [ userdata , setUserdata] = useState({name:"",email:"",password:"",confirmpassword:"", role:"Buyer"})
+  const [ userdata , setUserdata] = useState({name:"",email:"",password:"",confirmpassword:"", role:"Buyer" , number:""})
   const handleChange = (event) => {
     setUserdata({...userdata,[event.target.name]:event.target.value})
   }
@@ -20,11 +20,11 @@ const Register = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (userdata.name && userdata.email && userdata.password && userdata.confirmpassword && userdata.role) {
+    if (userdata.name && userdata.email && userdata.password && userdata.confirmpassword && userdata.role && userdata.number) {
         if (userdata.password === userdata.confirmpassword) {
             const response = await axios.post("http://localhost:8000/register", { userdata });
             if (response.data.success) {
-                setUserdata({ name: "", email: "", password: "", confirmpassword: "", role: "" })
+                setUserdata({ name: "", email: "", password: "", confirmpassword: "", role: "",number:"" })
                 router('/Login')
                 toast.success(response.data.message)
             } else {
@@ -47,14 +47,15 @@ const Register = () => {
 
         <label >EMAIL</label> <br />
         <input  onChange={handleChange} value={userdata.email}  type="email"  name='email'/> <br />
-
+        <label >Number</label> <br />
+        <input  onChange={handleChange} value={userdata.number}  type="number"  name='number'/> <br />
         <label>ROLE</label>   
         <select id="select" onChange={handleRole}>
           <option>role</option>
           <option value="Buyer">Buyer</option>
           <option value="Seller">Seller</option>
         </select> <br />
-
+         
         <label >PASSWPORD</label> <br />
         <input  onChange={handleChange} value={userdata.password} type="password" name='password' /> <br />
 

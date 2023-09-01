@@ -12,7 +12,7 @@ const Home = () => {
         console.log(response.data,"line12")
         if (response.data.success) {
             setAllProducts(response.data.Product)
-            console.log(response.data.Product,"line15")
+            // console.log(response.data.Product,"line15")
         }
     }
     getProducts();

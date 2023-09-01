@@ -1,0 +1,16 @@
+#head{
+    color: blueviolet;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+#body-pro{
+    /* border: 1px solid blueviolet; */
+    width: 50%;
+    margin: auto;
+    margin-top: 3%;
+    line-height: 50px;
+    padding-bottom: 2%;
+    color:rgb(32, 32, 32);
+    /* opacity: 80%; */
+    background-image: url("https://i.pinimg.com/564x/57/1c/ff/571cff0df1425a651e3ad7615ffca59f.jpg");
+}

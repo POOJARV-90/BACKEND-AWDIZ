@@ -1,12 +1,16 @@
 import UserModal from "../../test4/Modals/User.modal.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import {nanoid} from 'nanoid'
+import { customAlphabet } from "nanoid";
+import { sendTwilioMessage } from "../Helper/sms.js";
+
 
 export const Register = async (req, res) => {
   try {
     const { userdata } = req.body;
-    const { name, email, password, role } = userdata;
-    if (!name || !email || !password || !role)
+    const { name, email, password, role , number } = userdata;
+    if (!name || !email || !password || !role  || !number)
       return res.json({
         success: false,
         message: "All fields are mandtory.."
@@ -21,7 +25,7 @@ export const Register = async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new UserModal({ name, email, password: hashedPassword, role });
+    const user = new UserModal({ name, email, password: hashedPassword, role , number });
 
     await user.save();
 
@@ -107,3 +111,74 @@ export const getCurrentUser = async (req, res) => {
     return res.status(500).json({ success: false, message: error });
   }
 };
+
+
+export const getNumber = async (req, res) => {
+  try {
+      const { userId } = req.body;
+      if (!userId) return res.json({ success: false, message: "User Id is mandtory.." })
+
+      const userNumber = await UserModal.findById(userId).select("number isNumberVerified");
+      if (userNumber) {
+          return res.json({ success: true, number: userNumber.number, isNumberVerified: userNumber.isNumberVerified })
+      }
+      return res.json({ success: false, message: "Internal error try again.." })
+
+  } catch (error) {
+      return res.json({ success: false, message: error })
+  }
+}
+
+export const sendOtp = async (req, res) => {
+  try {
+      const { userId } = req.body;
+      if (!userId) return res.json({ success: false, message: "User Id is mandtory.." })
+
+      const userNumber = await UserModal.findById(userId);
+      const nanoid = customAlphabet('1234567890',10)
+      const otp = nanoid() // use nanoid or uuid
+      const message = `Hello , User your mobile verification otp is - ${otp}`
+      if (userNumber) {
+
+          const responseFromTwilio = sendTwilioMessage(userNumber.number, message)
+          console.log(responseFromTwilio, "responseFromTwilio")
+          if (responseFromTwilio) {
+              userNumber.otpForNumberVerification = otp;
+              await userNumber.save()
+              return res.json({ success: true, message: "Otp sent to your number." })
+          }
+      }
+      return res.json({ success: false, message: "User not foudn.." })
+
+  } catch (error) {
+      return res.json({ success: false, message: error })
+  }
+}
+
+export const verifyOtp = async (req , res) => {
+
+  try {
+    const {otp ,userId} = req.body
+
+    if(!otp || !userId) return res.status(404).json({success:false , message:"otp and userid require"})
+
+    const user = await UserModal.findById(userId);
+
+    if(user){
+      if(user.otpForNumberVerification == otp){
+        user.isNumberVerified = true;
+        await user.save();
+        return res.status(200).json({success:true,message:"otp verfied succesfully",isNumberVerified:user.isNumberVerified})
+      }
+
+    }
+     return res.status(404).json({
+      success: false,
+      message: "user not found"})
+  } catch (error) {
+    return res
+    .status(500)
+    .json({ success: false, message: error });
+  }
+
+}
