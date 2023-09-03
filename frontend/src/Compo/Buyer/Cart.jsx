@@ -5,10 +5,9 @@ import '../Style/Cart.css'
 import { toast } from 'react-hot-toast';
 
 const Cart = () => {
-    const [cartpro , setCartpro] =useState([]);
+    const [cartpro, setCartpro] = useState([]);
     const [finalPrice, setFinalPrice] = useState(0);
-    const {state } = useContext(Authcontext)
-
+    const { state } = useContext(Authcontext)
 
     useEffect(() => {
         async function getCartProduct() {
@@ -25,65 +24,60 @@ const Cart = () => {
             getCartProduct()
         }
     }, [state])
-    // console.log(cartpro,"all data here");
 
     useEffect(() => {
-      if (cartpro.length) { 
-          var totalPrice = 0;
-          for (var i = 0; i < cartpro.length; i++) {
-            totalPrice += cartpro[i].price
-          }
-          setFinalPrice(totalPrice)
-      }
-  }, [cartpro])
+        if (cartpro.length) {
+            var totalPrice = 0;
+            for (var i = 0; i < cartpro.length; i++) {
+                totalPrice += cartpro[i].price
+            }
+            setFinalPrice(totalPrice)
+        }
+    }, [cartpro])
 
-  const handleBuy = () => {
-    // Clear the cart
-    setCartpro([]);
-    setFinalPrice(0)
-    // Show the alert
-   toast.success("Your products will be delivered soon!");
-};
-  return (
-    <>
-    <h1 id='head-1' style={{textAlign:'center' , color :"#010510" }}>Cart</h1>
-    <div id='body-1' style={{display:'flex'}}>
-      
-      <div id='container-1' >
-        {cartpro?.length && cartpro.map((pro) => (    //.length
-          <div id='product-1' key={pro._id}>
-            <img
-              id='img-1'
-              src={pro.image}
-              alt=""
-            />
-            <p id='detail-1'>{pro.name} </p >
-            <h3 style={{ marginLeft: "20px" }}> </h3>
-            <span>{pro.price}</span>
-            <p id='category-1'> <b>{pro.category}</b></p>
-            
-           
-            
+    const handleBuy = () => {
+        // Clear the cart
+        setCartpro([]);
+        setFinalPrice(0)
+        // Show the alert
+        toast.success("Your products will be delivered soon!");
+    };
 
-          </div>
-        ))}
+    return (
+        <>
+            <h1 id='head-1' style={{ textAlign: 'center', color: "#010510" }}>Cart</h1>
+            <div id='body-1' style={{ display: 'flex' }}>
+                {cartpro?.length ? (
+                    <>
+                        <div id='container-1'>
+                            {cartpro.map((pro) => (
+                                <div id='product-1' key={pro._id}>
+                                    <img
+                                        id='img-1'
+                                        src={pro.image}
+                                        alt=""
+                                    />
+                                    <p id='detail-1'>{pro.name} </p>
+                                    <h3 style={{ marginLeft: "20px" }}> </h3>
+                                    <span>{pro.price}</span>
+                                    <p id='category-1'> <b>{pro.category}</b></p>
+                                </div>
+                            ))}
+                        </div>
 
-        
-
-       
-      </div>
-
-      <div id='total-1' >
-      <h1>Total </h1>
-                    <p> <span>Total MRP :</span>  <span>{finalPrice}</span> ₹ </p>
-                    <p> <span> Discount (50%) : </span>   <span> {(finalPrice * 0.5).toFixed(2)} ₹ </span> </p>
-                    <button onClick={handleBuy} >Buy Products</button>
-
-
-      </div>
-    </div>
-    </>
-  )
+                        <div id='total-1'>
+                            <h1>Total </h1>
+                            <p> <span>Total MRP :</span>  <span>{finalPrice}</span> ₹ </p>
+                            <p> <span> Discount (50%) : </span>   <span> {(finalPrice * 0.5).toFixed(2)} ₹ </span> </p>
+                            <button onClick={handleBuy} >Buy Products</button>
+                        </div>
+                    </>
+                ) : (
+                    <p>ADD PRODUCT TO CART</p>
+                )}
+            </div>
+        </>
+    )
 }
 
-export default Cart
+export default Cart;

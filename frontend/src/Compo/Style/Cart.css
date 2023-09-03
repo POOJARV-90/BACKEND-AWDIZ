@@ -70,8 +70,8 @@
     padding: 1%;
     padding-bottom: 3%;
     padding-top: 2%;
-    background-color: #d5e4fc;
-    box-shadow: 0 1px 3px rgb(137, 191, 241);
+    background-color: #f4d5fc;
+    box-shadow: 0 1px 3px 1px solid rgb(245, 179, 231);
     
 }
 #total-1>h1{
@@ -87,7 +87,7 @@
     align-items: center;
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid rgb(157, 157, 252);
+    border-bottom: 1px solid rgb(245, 179, 231);
 
 
 }
@@ -108,10 +108,12 @@
    height: 40px;
    padding: 0% 6.5%;
    align-items: center;
-   background-color : #1c283e ;
+   background: #654ea3; 
+background: -webkit-linear-gradient(to left, #eaafc8, #654ea3); 
+background: linear-gradient(to left, #eaafc8, #654ea3); 
     font-size: 15px ;
      font-weight:bold ;
-      color:#15edfc ;
+      /* color:#15edfc ; */
        border :none  ;
          cursor :pointer ;
           border-radius :20px ;

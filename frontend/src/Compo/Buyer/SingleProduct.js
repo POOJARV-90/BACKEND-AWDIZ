@@ -46,7 +46,7 @@ const SingleProduct = () => {
     <div id='the-pro-body' >
     <div>
         <img src={singlepro.image} />
-    </div>
+    </div>    
     <div >
 
         <h2>    Product-id {singlepro.id} | {singlepro.name}</h2>
