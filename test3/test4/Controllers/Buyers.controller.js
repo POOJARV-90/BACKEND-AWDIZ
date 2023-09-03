@@ -8,7 +8,7 @@ export const addCart = async (req, res) => {
 
     if (!token || !productId) {
       throw new Error({
-        status: "error",
+       success:false,
         message: "Token and Product id is required.",
       });
     }
@@ -20,7 +20,7 @@ export const addCart = async (req, res) => {
     await user.save();
     return res.status(200).json({ success: true, user: user });
   } catch (error) {
-    return res.status(500).json({ status: "error", message: error.message });
+    return res.status(500).json({  success:false, message: error.message });
   }
 };
 
@@ -59,7 +59,6 @@ export const removecartproduct = async(req , res) =>{
     const userId = decodedData?.userId
     const user = await UserModal.findById({_id:userId})
     const cart = user?.cart
-    console.log(cart);
     const removeitems = cart.indexOf(productId)
     cart.splice(removeitems,1)
     await user.save()

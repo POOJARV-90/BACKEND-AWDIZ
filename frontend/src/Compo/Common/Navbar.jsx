@@ -21,7 +21,7 @@ const Navbar = () => {
         </div>
         <div>
         {state?.user?.name ? <>
-                    {state?.user?.role == "Buyer" && <h4>Cart</h4>}
+                    {state?.user?.role == "Buyer" && <h4 onClick={() => router("/cart")}>Cart</h4>}
                     <h4 onClick={() => router('/profile')}>Profile</h4>
                     <h4 onClick={() => dispatch({ type: "LOGOUT" })}>Logout</h4>
                 </> : <h4 onClick={() => router('/login')}>Login/Register</h4>}

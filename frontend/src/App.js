@@ -8,6 +8,8 @@ import Navbar from './Compo/Common/Navbar';
 import AddProduct from './Compo/Seller/AddProduct';
 import YourProducts from './Compo/Seller/YourProducts';
 import Profile from './Compo/Profile';
+import SingleProduct from './Compo/Buyer/SingleProduct';
+import Cart from './Compo/Buyer/Cart';
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
       <Route exact path='/add-product' element={<AddProduct/>}/>
       <Route exact path='/seller-your-products' element={<YourProducts/>}/>
       <Route exact path='/profile' element={<Profile/>}/>
+      <Route exact path='/single-products/:id' element={<SingleProduct/>} />
+      <Route exact path='/cart' element={<Cart/>} />
       
       </Routes>
       

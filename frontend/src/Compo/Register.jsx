@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { toast } from 'react-hot-toast'
 import axios from 'axios'
+import api from './Api.config'
 import { useNavigate } from 'react-router-dom'
 import '../Compo/Register.css'
 
@@ -22,7 +23,7 @@ const Register = () => {
     event.preventDefault();
     if (userdata.name && userdata.email && userdata.password && userdata.confirmpassword && userdata.role && userdata.number) {
         if (userdata.password === userdata.confirmpassword) {
-            const response = await axios.post("http://localhost:8000/register", { userdata });
+            const response = await api.post("/register", { userdata });
             if (response.data.success) {
                 setUserdata({ name: "", email: "", password: "", confirmpassword: "", role: "",number:"" })
                 router('/Login')
