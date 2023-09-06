@@ -35,14 +35,33 @@ const Cart = () => {
         }
     }, [cartpro])
 
-    const handleBuy = () => {
-        // Clear the cart
-        setCartpro([]);
-        setFinalPrice(0)
-        // Show the alert
-        toast.success("Your products will be delivered soon!");
-    };
+    // const handleBuy = () => {
+    //     // Clear the cart
+    //     setCartpro([]);
+    //     setFinalPrice(0)
+    //     // Show the alert
+    //     toast.success("Your products will be delivered soon!");
+    // };
 
+
+    const handleBuy = async() =>{
+        const token = JSON.parse(localStorage.getItem("token"))
+
+        if(token){
+            try {
+                const response = await api.post("/remove-all-cart-products'",{token})
+                if(response.data.success){
+                    toast.success("Your products will be delivered soon!")
+                    setCartpro([])
+                }else{
+                    toast.error(response.data.message)
+                }
+                
+            } catch (error) {
+                toast.error(error.response.data.message);
+            }
+        }
+    }
     return (
         <>
             <h1 id='head-1' style={{ textAlign: 'center', color: "#010510" }}>Cart</h1>

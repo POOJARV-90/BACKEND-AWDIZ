@@ -6,7 +6,7 @@ import morgan from 'morgan';
 import { Login, Register, getCurrentUser, getNumber, sendOtp, verifyOtp } from './Controllers/User.controller.js';
 import { addComments, addNewCart, addProduct, addRating, allNewCartProducts, allProducts, deleteyourProduct, getSingleProductData, getYourProducts, updateYourProduct } from './Controllers/Product.controller.js';
 import { checkseller, isAdmin, isValidUser } from './middleware/All.middleware.js';
-import { addCart, addWishlist, allcartProduct, getWishlistProducts, removecartproduct } from './Controllers/Buyers.controller.js';
+import { addCart, addWishlist, allcartProduct, getWishlistProducts, removeAllCartProducts, removecartproduct } from './Controllers/Buyers.controller.js';
 import { blockProduct, blockUser, getAllBuyers, getAllProducts, getAllSellers, getBlockedProducts, getUnVerifiedProducts, getverifiedProducts, unBlockUser, unblockProduct, verifyProduct } from './Controllers/Admin.controllers.js';
 
 
@@ -44,10 +44,11 @@ app.patch('/add-rating',isValidUser, addRating)
 app.post("/add-wishlist", addWishlist)
 app.get("/get-wishlist-products", getWishlistProducts)
 app.post('/addCart', addCart)
-app.post('/cart',addNewCart)
+app.post('/cart',addNewCart)  //update
 app.get('/get-all-cart-product',allcartProduct)
-app.post('/your-cart-product',allNewCartProducts)
+app.post('/your-cart-product',allNewCartProducts) //update
 app.delete('/remove-cart-product',removecartproduct)
+app.post('/remove-all-cart-products',removeAllCartProducts)
 app.post('/get-single-product-data',getSingleProductData)
 
 //ADMIN

@@ -64,7 +64,7 @@ export const removecartproduct = async(req , res) =>{
     await user.save()
      return res.status(200).json({ success: true, user: user });
   } catch (error) {
-    return res.status(500).json({ status: "error", message: error.message });
+    return res.status(500).json({ success: false, message: error.message });
   }
 }
 
@@ -117,6 +117,40 @@ export const getWishlistProducts = async (req, res) => {
   }
 }
 
+
+export const removeAllCartProducts = async (req, res) => {
+  try {
+    const { token } = req.body;
+
+    if (!token)
+      return res
+        .satus(404)
+        .json({ success: false, message: "Token is required!" });
+
+    const decodedData = jwt.verify(token, process.env.JWT_SECRET);
+
+    if (!decodedData)
+      return res
+        .status(404)
+        .json({ success: false, message: "Not a valid token" });
+
+    const userId = decodedData?.userId;
+
+    const user = await UserModal.findById(userId);
+
+    if (user) {
+      user.cart = [];
+      await user.save();
+      return res.status(200).json({
+        success: true,
+        message: "Thank you for shopping! Your products will deliver soon...",
+      });
+    }
+    return res.status(404).json({ success: false, message: "No user found!" });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error });
+  }
+};
 
 
 
