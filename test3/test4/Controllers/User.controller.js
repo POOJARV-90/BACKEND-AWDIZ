@@ -48,7 +48,7 @@ export const Login = async (req, res) => {
         message: "All fields are mandtory..",
       });
 
-    const user = await UserModal.findOne({ email });
+    const user = await UserModal.findOne({ email });  //
     if (!user) return res.json({ success: false, message: "User not found.." });
 
     if (user.isBlocked) {
@@ -56,6 +56,7 @@ export const Login = async (req, res) => {
     }
 
     const isPasswordRight = await bcrypt.compare(password, user.password);
+
     // console.log(isPasswordRight, "isPasswordRight")
     if (isPasswordRight) {
       const userObeject = {
@@ -64,8 +65,9 @@ export const Login = async (req, res) => {
         _id: user._id,
         role:user.role
       };
-      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
-      // console.log(token, "token her")
+
+      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET); //generate//
+      console.log(token, "token her")
       return res.json({
         success: true,
         message: "Login Successfull.",
@@ -81,7 +83,7 @@ export const Login = async (req, res) => {
 
 export const getCurrentUser = async (req, res) => {
   try {
-    const { token } = req.body;
+    const { token } = req.body; 
     if (!token)
       return res.json({ success: false, message: "Token is required!" });
 

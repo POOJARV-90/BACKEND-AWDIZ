@@ -21,10 +21,10 @@ app.get("/",(req, res)=>{
     res.send("Working....")
 })
 
-app.post("/register",Register)
-app.post("/login",Login)
-app.post('/get-current-user', getCurrentUser)
-app.get("/all-products", allProducts)
+app.post("/register",Register)  //1
+app.post("/login",Login) //1 
+app.post('/get-current-user', getCurrentUser) //1
+app.get("/all-products", allProducts) //1
 app.post("/get-number", getNumber)
 
 app.post("/send-otp", sendOtp)
@@ -33,10 +33,10 @@ app.post("/verify-otp", verifyOtp) //verification
 
 //SELLER
 
-app.post('/add-product' , checkseller, addProduct )
-app.post('/get-your-product' , checkseller, getYourProducts)
-app.patch('/update-your-product', checkseller, updateYourProduct)
-app.delete('/delete-your-product', checkseller, deleteyourProduct)
+app.post('/add-product' , checkseller, addProduct )  //1
+app.post('/get-your-product' , checkseller, getYourProducts) //1
+app.patch('/update-your-product', checkseller, updateYourProduct) //1 
+app.delete('/delete-your-product', checkseller, deleteyourProduct) //1
 
 //BUYER 
 app.patch('/add-comments',isValidUser, addComments) 

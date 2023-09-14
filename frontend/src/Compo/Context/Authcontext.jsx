@@ -2,11 +2,12 @@ import axios from 'axios';
 import { createContext, useEffect, useReducer } from "react";
 import { toast } from "react-hot-toast";
 
-export const Authcontext = createContext();
+export const Authcontext = createContext();   //1//
 
-const initialState = { user: null };
+const initialState = { user: null };   
 
 const reducer = (state, action) => {
+
   switch (action.type) {
     case "LOGIN":
       return { ...state, user: action.payload };
@@ -18,10 +19,12 @@ const reducer = (state, action) => {
     default:
       return state;
   }
+
 };
 
 // Its a higher order function hof
 const HandleAuthContext = ({ children }) => {
+  
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
@@ -50,7 +53,7 @@ const HandleAuthContext = ({ children }) => {
 
   return (
     <Authcontext.Provider value={{ state, dispatch }}>
-      {children}
+      {children}  
     </Authcontext.Provider>
   );
 };
