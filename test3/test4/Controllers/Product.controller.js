@@ -15,7 +15,7 @@ export const addProduct = async (req , res)=>{
         if (!decodedData) {
             return res.status(404).json({ success:false, message: "Token not valid." })
         }
-        const userId = decodedData?.userId
+        const userId = decodedData?.userId   
       
        const Product =  new ProductModal({name , price , image , category ,userId: userId })
 
